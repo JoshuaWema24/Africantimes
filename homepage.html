@@ -17,7 +17,6 @@
       overflow-x: hidden;
     }
 
-    /* Navigation Button */
     .nav-button {
       position: fixed;
       top: 20px;
@@ -49,7 +48,6 @@
       margin: 2px 0;
     }
 
-    /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
@@ -92,23 +90,22 @@
       transform: translateX(5px);
     }
 
-    /* Search Bar */
     .search-container {
       position: relative;
-      width: 370px;
-      max-width: 370px;
-      margin: 0 auto;
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto;
       animation: float 3s ease-in-out infinite;
     }
 
     .search-bar {
       width: 100%;
-      padding: 15px 20px;
+      padding: 0.9rem 1.2rem;
       border: none;
-      border-radius: 50px;
+      border-radius: 999px;
       background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(5px);
-      font-size: 16px;
+      backdrop-filter: blur(12px);
+      font-size: 1rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
@@ -121,13 +118,20 @@
 
     .search-icon {
       position: absolute;
-      right: 20px;
+      right: 1.2rem;
       top: 50%;
       transform: translateY(-50%);
       color: #555;
+      font-size: 1.2rem;
+      pointer-events: none;
     }
 
-    /* User Placeholder */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+
     .user-placeholder {
       position: fixed;
       top: 20px;
@@ -151,13 +155,6 @@
       background: rgba(255, 255, 255, 0.3);
     }
 
-    /* Animations */
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
-
     @keyframes fadeInUp {
       0% {
         opacity: 0;
@@ -172,9 +169,9 @@
     .content {
       text-align: center;
       color: white;
-      padding: 20px, 15px;
+      padding: 20px 15px;
       background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
       border-radius: 30px;
       margin: 80px auto 0 auto;
       max-width: 600px;
@@ -192,7 +189,7 @@
       margin-bottom: 30px;
     }
 
-    /* Responsive Breakpoints */
+    /* Media Queries */
     @media (max-width: 768px) {
       .nav-button,
       .user-placeholder {
@@ -221,6 +218,16 @@
       p {
         font-size: 1rem;
       }
+
+      .search-bar {
+        font-size: 0.95rem;
+        padding: 0.8rem 1rem;
+      }
+
+      .search-icon {
+        font-size: 1rem;
+        right: 1rem;
+      }
     }
 
     @media (max-width: 480px) {
@@ -228,14 +235,18 @@
         width: 180px;
       }
 
+      .search-container {
+        width: 95%;
+      }
+
       .search-bar {
-        padding: 12px 16px;
-        font-size: 14px;
-        min-width: 200px;
+        font-size: 0.9rem;
+        padding: 0.75rem 0.9rem;
       }
 
       .search-icon {
-        right: 15px;
+        font-size: 0.95rem;
+        right: 0.9rem;
       }
 
       .content {
@@ -249,13 +260,8 @@
       p {
         font-size: 0.95rem;
       }
-
-      .search-container {
-        animation: float 2s ease-in-out infinite;
-      }
     }
 
-    /* Accessibility: Reduce motion preference */
     @media (prefers-reduced-motion: reduce) {
       .search-container,
       .content {
@@ -266,14 +272,13 @@
 </head>
 <body>
 
-  <!-- Three-dot Navigation Button -->
+  <!-- Navigation -->
   <button class="nav-button" id="navButton">
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
   </button>
 
-  <!-- Sidebar Menu -->
   <div class="sidebar" id="sidebar">
     <ul>
       <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
@@ -284,7 +289,7 @@
     </ul>
   </div>
 
-  <!-- User Placeholder -->
+  <!-- User Icon -->
   <div class="user-placeholder">
     <i class="fas fa-user"></i>
   </div>
@@ -294,15 +299,15 @@
     <h1>Literary Haven</h1>
     <p>Discover captivating stories and thought-provoking blogs</p>
 
-    <!-- Animated Search Bar -->
+    <!-- Search -->
     <div class="search-container">
       <input type="text" class="search-bar" placeholder="Search for novels or blogs..." />
       <i class="fas fa-search search-icon"></i>
     </div>
   </div>
 
+  <!-- JS -->
   <script>
-    // Toggle sidebar
     const navButton = document.getElementById('navButton');
     const sidebar = document.getElementById('sidebar');
 
@@ -310,7 +315,6 @@
       sidebar.classList.toggle('open');
     });
 
-    // Animate search bar on focus
     const searchBar = document.querySelector('.search-bar');
 
     searchBar.addEventListener('focus', () => {
@@ -321,7 +325,6 @@
       searchBar.parentElement.style.animation = 'float 3s ease-in-out infinite';
     });
 
-    // Optional: Close sidebar on menu click
     document.querySelectorAll('.sidebar a').forEach(link => {
       link.addEventListener('click', () => {
         sidebar.classList.remove('open');

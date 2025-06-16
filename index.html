@@ -98,3 +98,26 @@
     window.location.href = 'loginpage.html';
   });
 </script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCcZn_PyT-JMz0RZXeUEa-EhEg97e4ksFw",
+    authDomain: "africantimes-b4c77.firebaseapp.com",
+    projectId: "africantimes-b4c77",
+    storageBucket: "africantimes-b4c77.firebasestorage.app",
+    messagingSenderId: "698232374609",
+    appId: "1:698232374609:web:5ae8a493ab57949b513f70",
+    measurementId: "G-XYPKN98VMR"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
