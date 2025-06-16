@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Literary Haven</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      background: url('luxury-reading-material-illuminates-old-fashioned-elegance-indoors-generated-by-ai.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Navigation Button */
+    .nav-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background-color: white;
+      border-radius: 50%;
+      margin: 2px 0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 250px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      z-index: 999;
+      padding: 70px 20px 20px;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar li {
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      color: #f8d56b;
+      transform: translateX(5px);
+    }
+
+    /* Search Bar */
+    .search-container {
+      position: relative;
+      width: 370px;
+      max-width: 370px;
+      margin: 0 auto;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      font-size: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .search-bar:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #555;
+    }
+
+    /* User Placeholder */
+    .user-placeholder {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .user-placeholder:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content {
+      text-align: center;
+      color: white;
+      padding: 20px, 15px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      margin: 80px auto 0 auto;
+      max-width: 600px;
+      width: 90%;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 768px) {
+      .nav-button,
+      .user-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+
+      .dot {
+        width: 5px;
+        height: 5px;
+      }
+
+      .sidebar {
+        width: 200px;
+        padding: 60px 15px;
+      }
+
+      .sidebar a {
+        font-size: 16px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar {
+        width: 180px;
+      }
+
+      .search-bar {
+        padding: 12px 16px;
+        font-size: 14px;
+        min-width: 200px;
+      }
+
+      .search-icon {
+        right: 15px;
+      }
+
+      .content {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+
+      .search-container {
+        animation: float 2s ease-in-out infinite;
+      }
+    }
+
+    /* Accessibility: Reduce motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .search-container,
+      .content {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Three-dot Navigation Button -->
+  <button class="nav-button" id="navButton">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </button>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#"><i class="fas fa-book-open"></i> Novels</a></li>
+      <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+      <li><a href="#"><i class="fas fa-bookmark"></i> Bookmarks</a></li>
+      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+    </ul>
+  </div>
+
+  <!-- User Placeholder -->
+  <div class="user-placeholder">
+    <i class="fas fa-user"></i>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h1>Literary Haven</h1>
+    <p>Discover captivating stories and thought-provoking blogs</p>
+
+    <!-- Animated Search Bar -->
+    <div class="search-container">
+      <input type="text" class="search-bar" placeholder="Search for novels or blogs..." />
+      <i class="fas fa-search search-icon"></i>
+    </div>
+  </div>
+
+  <script>
+    // Toggle sidebar
+    const navButton = document.getElementById('navButton');
+    const sidebar = document.getElementById('sidebar');
+
+    navButton.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Animate search bar on focus
+    const searchBar = document.querySelector('.search-bar');
+
+    searchBar.addEventListener('focus', () => {
+      searchBar.parentElement.style.animation = 'none';
+    });
+
+    searchBar.addEventListener('blur', () => {
+      searchBar.parentElement.style.animation = 'float 3s ease-in-out infinite';
+    });
+
+    // Optional: Close sidebar on menu click
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>

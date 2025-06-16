@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Joshua Wema</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: url('logo_make_11_06_2023_22.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .wrapper {
+      background: transparent;
+      backdrop-filter: blur(20px);
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .wrapper h1 {
+      color: white;
+      font-weight: 900;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .wrapper p {
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 25px;
+    }
+
+    .wrapper button {
+      color: greenyellow;
+      font-weight: 800;
+      background: peru;
+      width: 80%;
+      max-width: 200px;
+      height: 45px;
+      border-radius: 15px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .wrapper button:hover {
+      background: yellow;
+    }
+
+    @media (max-width: 480px) {
+      .wrapper {
+        padding: 20px 15px;
+        border-radius: 20px;
+      }
+
+      .wrapper h1 {
+        font-size: 2rem;
+      }
+
+      .wrapper p {
+        font-size: 0.95rem;
+      }
+
+      .wrapper button {
+        height: 40px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>The African times</h1>
+    <p>Welcome to this world, where rules off reason are suspended. Come meet some of the best writers and bloggers in Africa.</p>
+    <button>Get started...</button>
+  </div>
+</body>
+</html>
+<script>
+  document.querySelector('button').addEventListener('click', function() {
+    window.location.href = 'loginpage.html';
+  });
+</script>
