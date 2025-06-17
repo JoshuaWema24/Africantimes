@@ -1,20 +1,22 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bookmarks.novelTopia</title>
-</head>
-<style>
-    body{
-        background: url('logo_make_11_06_2023_22.jpg') no-repeat center center fixed;
-        background-size: cover;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        padding: 20px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>novelTopia.bookmarks</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      background: url('logo_make_11_06_2023_22.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
     }
+
     .nav-button {
       position: fixed;
       top: 20px;
@@ -87,87 +89,36 @@
       color: #f8d56b;
       transform: translateX(5px);
     }
-.nav-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      z-index: 1000;
-      backdrop-filter: blur(5px);
-      transition: all 0.3s ease;
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .nav-button:hover {
-      background: rgba(255, 255, 255, 0.3);
+    @media (max-width: 768px) {
+      .nav-button {
+        width: 40px;
+        height: 40px;
+      }
     }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      background-color: white;
-      border-radius: 50%;
-      margin: 2px 0;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 250px;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      z-index: 999;
-      padding: 70px 20px 20px;
-    }
-
-    .sidebar.open {
-      left: 0;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .sidebar li {
-      padding: 15px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      font-size: 18px;
-      display: block;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar a:hover {
-      color: #f8d56b;
-      transform: translateX(5px);
-    }
-</style>
+  </style>
+</head>
 <body>
-    <!-- Navigation -->
+
+  <!-- Navigation Button -->
   <button class="nav-button" id="navButton">
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
   </button>
 
+  <!-- Sidebar Menu -->
   <div class="sidebar" id="sidebar">
     <ul>
       <li><a href="homepage.html"><i class="fas fa-home"></i> Home</a></li>
@@ -177,13 +128,16 @@
       <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
     </ul>
   </div>
-    <script>
-        const navButton = document.getElementById('navButton');
-        const sidebar = document.getElementById('sidebar');
-    
-        navButton.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        });
-    </script>
+
+  <!-- Script to toggle sidebar -->
+  <script>
+    const navButton = document.getElementById('navButton');
+    const sidebar = document.getElementById('sidebar');
+
+    navButton.addEventListener('click', () => {
+      sidebar.classList.toggle('open'); // Corrected class
+    });
+  </script>
+
 </body>
 </html>
