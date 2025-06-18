@@ -32,10 +32,10 @@ const User = mongoose.model('User', userSchema);
 
 //book Schema
 const booksSchema9 = new mongoose.Schema({
-  bookname: { type: String, required: true, unique: true},
+  booktitle: { type: String, required: true, unique: true},
   bookauthor: { type: String, required: true},
-  genre: { type: String, required: true},
-  description: { type: String, required: true},
+  bookgenre: { type: String, required: true},
+  bookdesc: { type: String, required: true},
   content: { type: String, required: true},
   likes: { type: Number, default: 0}
 }, { timestamps: true });
@@ -85,6 +85,20 @@ app.post('/signup', async (req, res) => {
     console.error('Signup error:', err);
     res.status(500).json({ error: 'Server error' });
   }
+});
+
+// write a book route
+app.post('/writebook', async (req, res) => {
+ const {booktitle, bookauthor, bookgenre, bookcover} = req.body;
+
+ const existingbooktitle = await Books.findOne({ booktitle })
+ if (existingbooktitle) {
+  return res.status(409).json({error: "Book Title already taken!"});
+ }
+
+ //save book details
+  const newBook = new Books({ booktitle, bookauthor, bookgenre});
+  await newBook.save();
 });
 
 // Start server

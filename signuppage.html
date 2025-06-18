@@ -142,41 +142,41 @@
 </form>
 <p>Already have an account? <a href="loginpage.html">Login</a></p>
 <script>
-  document.getElementById("signupForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-    const email = e.target.email.value;
-    const confirmPassword = e.target.confirmPassword.value;
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+      const email = e.target.email.value;
+      const confirmPassword = e.target.confirmPassword.value;
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:3000/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, password }),
-        
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        alert(result.message);
-        window.location.href = "homepage.html";
-      } else {
-        alert(result.error || "Signup failed");
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred");
-    }
-  });
+
+      try {
+        const response = await fetch("http://localhost:3000/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ username, password }),
+          
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message);
+          window.location.href = "homepage.html";
+        } else {
+          alert(result.error || "Signup failed");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("An error occurred");
+      }
+    });
 </script>
   </div>
 </body>

@@ -24,11 +24,11 @@
       align-items: center;
       padding: 20px;
     }
-
-    h1 {
+    
+     h1 {
       font-family: 'Pacifico', cursive;
       color: yellow;
-      font-size: 3.5rem;
+      font-size: 70px;
       text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
       margin-top: 20px;
       text-align: center;
@@ -187,11 +187,13 @@
 </head>
 <body>
 
+ <div class="box">
   <h1>Write a Novel</h1>
+ </div> 
 
   <div class="container">
     <div class="wrapper2">
-      <form>
+      <form action="writenovel00.html" id="bookform" method="post">
         <div class="input-group">
           <i class="fa fa-book"></i>
           <input type="text" id="booktitle" name="booktitle" required placeholder=" " />
@@ -217,13 +219,12 @@
           <label>Short Description</label>
         </div>
 
-        <button type="submit" class="submit-btn">Submit</button>
-        <button type="button" class="next-step-btn" onclick="chooseNextStep()">Next: Write or Upload Chapter</button>
+        <button type="submit" class="submit-btn" onclick="writenovel.html">Next</button>
       </form>
     </div>
 
     <div class="preview-card">
-      <h2>Live Preview</h2>
+      <h2> Preview</h2>
       <p><strong>Title:</strong> <span id="preview-title">Your Title</span></p>
       <p><strong>Author:</strong> <span id="preview-author">Your Name</span></p>
       <p><strong>Genre:</strong> <span id="preview-genre">Genre</span></p>
@@ -258,18 +259,38 @@
       previewDesc.textContent = descInput.value || 'Short summary of your book';
     });
 
-    function chooseNextStep() {
-      const choice = confirm("Do you want to write your chapter now?\nClick OK to write online, or Cancel to upload a document.");
-      if (choice) {
-        alert("Redirecting to the writing editor...");
-        // You can replace this with actual navigation
-        // window.location.href = '/write-chapter';
+    document.getElementById("bookform").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const booktitle = e.target.booktitle.value;
+    const bookauthor = e.target.bookauthor.value;
+    const bookgenre = e.target.bookgenre.value;
+    const bookcover = e.target.bookcover.value;
+    const bookdesc = e.target.bookdesc.value;
+   try {
+      const response = await fetch("http://localhost:3000/writebook", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ booktitle, bookauthor, bookgenre, bookcover }),
+        
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        window.location.href = "writenovel00.html";
       } else {
-        alert("Opening file upload for document...");
-        // You can trigger a hidden file input here or redirect
-        // window.location.href = '/upload-chapter';
+        alert(result.error || "Try again");
       }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred");
     }
+  });
+   
+   
   </script>
   
 </body>
