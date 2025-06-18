@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>theafricantimes</title>
+  <title>thenovelTopia</title>
   <style>
     * {
       box-sizing: border-box;
@@ -121,22 +121,62 @@
 <body>
   <div class="wrapper">
     <h1>Sign up</h1>
-    <form action="homepage.html" method="get">
-      <div class="input-group">
-        <input type="text" name="username" required placeholder=" " />
-        <label>Username</label>
-      </div>
-      <div class="input-group">
-        <input type="password" name="password" required placeholder=" " />
-        <label>Password</label>
-      </div>
-      <div class="input-group">
-        <input type="password" name="password" required placeholder=" " />
-        <label>Confirm Password</label>
-      </div>
-      <button type="submit">Sign up</button>
-    </form>
-    <p>Already have an account? <a href="loginpage.html">Login</a></p>
+   <form action="homepage.html" id="signupForm" method="post">
+  <div class="input-group">
+    <input type="text" name="username" required placeholder=" " />
+    <label>Username</label>
+  </div>
+  <div class="input-group">
+    <input type="email" name="email" required placeholder=" " />
+    <label>Email</label>
+  </div>
+  <div class="input-group">
+    <input type="password" name="password" required placeholder=" " />
+    <label>Password</label>
+  </div>
+  <div class="input-group">
+    <input type="password" name="confirmPassword" required placeholder=" " />
+    <label>Confirm Password</label>
+  </div>
+  <button type="submit">Sign up</button>
+</form>
+<p>Already have an account? <a href="loginpage.html">Login</a></p>
+<script>
+  document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = e.target.username.value;
+    const password = e.target.password.value;
+    const email = e.target.email.value;
+    const confirmPassword = e.target.confirmPassword.value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        window.location.href = "homepage.html";
+      } else {
+        alert(result.error || "Signup failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred");
+    }
+  });
+</script>
   </div>
 </body>
 </html>

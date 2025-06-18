@@ -189,6 +189,44 @@
       margin-bottom: 30px;
     }
 
+    /* Bottom Navigation Styling */
+    .navigation-card {
+      width: fit-content;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      background-color: gold;
+      padding: 15px 20px;
+      border-radius: 50px;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background-color: gold;
+      border-radius: 50%;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 20px;
+      color: black;
+    }
+
+    .tab:hover {
+      background-color: brown;
+      color: white;
+    }
+
     /* Media Queries */
     @media (max-width: 768px) {
       .nav-button,
@@ -306,6 +344,19 @@
     </div>
   </div>
 
+  <!-- Bottom Navigation Bar -->
+  <div class="navigation-card">
+    <a href="homepage.html" class="tab" aria-label="Home">
+      <i class="fas fa-home"></i>
+    </a>
+    <a href="Writeanovel.html" class="tab" aria-label="Write a Novel">
+      <i class="fas fa-pen-nib"></i>
+    </a>
+    <a href="profile.html" class="tab" aria-label="Profile">
+      <i class="fas fa-user"></i>
+    </a>
+  </div>
+
   <!-- JS -->
   <script>
     const navButton = document.getElementById('navButton');
@@ -316,7 +367,6 @@
     });
 
     const searchBar = document.querySelector('.search-bar');
-
     searchBar.addEventListener('focus', () => {
       searchBar.parentElement.style.animation = 'none';
     });
