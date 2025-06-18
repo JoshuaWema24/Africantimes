@@ -13,7 +13,6 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
       margin: 0;
-      position: relative;
       overflow-x: hidden;
     }
 
@@ -23,29 +22,30 @@
       left: 20px;
       background: rgba(255, 255, 255, 0.2);
       border: none;
-      border-radius: 50%;
+      border-radius: 10px;
       width: 50px;
       height: 50px;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       z-index: 1000;
       backdrop-filter: blur(5px);
-      transition: all 0.3s ease;
+      transition: background 0.3s ease;
     }
 
     .nav-button:hover {
       background: rgba(255, 255, 255, 0.3);
     }
 
-    .dot {
-      width: 6px;
-      height: 6px;
-      background-color: white;
-      border-radius: 50%;
-      margin: 2px 0;
+    .nav-button i {
+      color: white;
+      font-size: 22px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-button.open i {
+      transform: rotate(90deg);
     }
 
     .sidebar {
@@ -90,48 +90,6 @@
       transform: translateX(5px);
     }
 
-    .search-container {
-      position: relative;
-      width: 90%;
-      max-width: 400px;
-      margin: 20px auto;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    .search-bar {
-      width: 100%;
-      padding: 0.9rem 1.2rem;
-      border: none;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(12px);
-      font-size: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .search-bar:focus {
-      outline: none;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .search-icon {
-      position: absolute;
-      right: 1.2rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #555;
-      font-size: 1.2rem;
-      pointer-events: none;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
-    }
-
     .user-placeholder {
       position: fixed;
       top: 20px;
@@ -153,17 +111,6 @@
 
     .user-placeholder:hover {
       background: rgba(255, 255, 255, 0.3);
-    }
-
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .content {
@@ -189,7 +136,109 @@
       margin-bottom: 30px;
     }
 
-    /* Bottom Navigation Styling */
+    .search-container {
+      position: relative;
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .search-bar:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #555;
+      font-size: 1.2rem;
+      pointer-events: none;
+    }
+
+    /* Book Carousel Section */
+    .book-carousel {
+      margin: 40px auto;
+      max-width: 95%;
+      color: white;
+      padding: 0 20px;
+    }
+
+    .book-carousel h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: left;
+      color: yellow;
+    }
+
+    .carousel-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 10px;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .carousel-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.5);
+      border-radius: 10px;
+    }
+
+    .book-card {
+      flex: 0 0 auto;
+      min-width: 130px;
+      scroll-snap-align: start;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 10px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .book-card img {
+      width: 100%;
+      border-radius: 10px;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .book-card h3 {
+      margin: 10px 0 5px;
+      font-size: 1rem;
+    }
+
+    .book-card p {
+      font-size: 0.9rem;
+      color: #eee;
+    }
+
+    .book-card:hover {
+      transform: scale(1.05);
+    }
+
     .navigation-card {
       width: fit-content;
       height: fit-content;
@@ -227,10 +276,25 @@
       color: white;
     }
 
-    /* Media Queries */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 768px) {
       .nav-button,
       .user-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+
+      .tab {
         width: 40px;
         height: 40px;
       }
@@ -256,67 +320,17 @@
       p {
         font-size: 1rem;
       }
-
-      .search-bar {
-        font-size: 0.95rem;
-        padding: 0.8rem 1rem;
-      }
-
-      .search-icon {
-        font-size: 1rem;
-        right: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .sidebar {
-        width: 180px;
-      }
-
-      .search-container {
-        width: 95%;
-      }
-
-      .search-bar {
-        font-size: 0.9rem;
-        padding: 0.75rem 0.9rem;
-      }
-
-      .search-icon {
-        font-size: 0.95rem;
-        right: 0.9rem;
-      }
-
-      .content {
-        padding: 15px;
-      }
-
-      h1 {
-        font-size: 1.8rem;
-      }
-
-      p {
-        font-size: 0.95rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .search-container,
-      .content {
-        animation: none !important;
-      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <button class="nav-button" id="navButton">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <!-- Hamburger Button -->
+  <button class="nav-button" id="navButton" aria-label="Toggle Sidebar">
+    <i class="fas fa-bars" id="menuIcon"></i>
   </button>
 
+  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <ul>
       <li><a href="homepage.html"><i class="fas fa-home"></i> Home</a></li>
@@ -337,47 +351,605 @@
     <h1>Literary Haven</h1>
     <p>Discover captivating stories and thought-provoking blogs</p>
 
-    <!-- Search -->
     <div class="search-container">
       <input type="text" class="search-bar" placeholder="Search for novels or blogs..." />
       <i class="fas fa-search search-icon"></i>
     </div>
   </div>
 
-  <!-- Bottom Navigation Bar -->
+  <!-- Book Carousel -->
+  <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+    <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+    <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+    <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+    <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+    <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+    <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+   <section class="book-carousel">
+    <h2>Popular Books</h2>
+    <div class="carousel-container">
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+1" alt="Book 1" />
+        <h3>Book Title 1</h3>
+        <p>by Author 1</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+2" alt="Book 2" />
+        <h3>Book Title 2</h3>
+        <p>by Author 2</p>
+      </div>
+      <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="https://via.placeholder.com/120x180?text=Book+3" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+       <div class="book-card">
+        <img src="" alt="Book 3" />
+        <h3>Book Title 3</h3>
+        <p>by Author 3</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation -->
   <div class="navigation-card">
-    <a href="homepage.html" class="tab" aria-label="Home">
-      <i class="fas fa-home"></i>
-    </a>
-    <a href="Writeanovel.html" class="tab" aria-label="Write a Novel">
-      <i class="fas fa-pen-nib"></i>
-    </a>
-    <a href="profile.html" class="tab" aria-label="Profile">
-      <i class="fas fa-user"></i>
-    </a>
+    <a href="homepage.html" class="tab" aria-label="Home"><i class="fas fa-home"></i></a>
+    <a href="Writeanovel.html" class="tab" aria-label="Write a Novel"><i class="fas fa-pen-nib"></i></a>
+    <a href="profile.html" class="tab" aria-label="Profile"><i class="fas fa-user"></i></a>
   </div>
 
-  <!-- JS -->
+  <!-- JavaScript -->
   <script>
     const navButton = document.getElementById('navButton');
     const sidebar = document.getElementById('sidebar');
+    const menuIcon = document.getElementById('menuIcon');
 
     navButton.addEventListener('click', () => {
       sidebar.classList.toggle('open');
-    });
-
-    const searchBar = document.querySelector('.search-bar');
-    searchBar.addEventListener('focus', () => {
-      searchBar.parentElement.style.animation = 'none';
-    });
-
-    searchBar.addEventListener('blur', () => {
-      searchBar.parentElement.style.animation = 'float 3s ease-in-out infinite';
+      menuIcon.classList.toggle('fa-bars');
+      menuIcon.classList.toggle('fa-times');
     });
 
     document.querySelectorAll('.sidebar a').forEach(link => {
       link.addEventListener('click', () => {
         sidebar.classList.remove('open');
+        menuIcon.classList.add('fa-bars');
+        menuIcon.classList.remove('fa-times');
       });
     });
   </script>
