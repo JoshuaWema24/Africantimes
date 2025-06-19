@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Profile</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     * {
       box-sizing: border-box;
-      padding: 0;
       margin: 0;
+      padding: 0;
       font-family: 'Poppins', sans-serif;
     }
 
@@ -50,6 +51,7 @@
       border: 3px solid white;
       object-fit: cover;
       margin-bottom: 20px;
+      cursor: pointer;
     }
 
     .info h2 {
@@ -74,6 +76,10 @@
       transition: 0.3s ease;
     }
 
+    .edit-btn i {
+      margin-right: 8px;
+    }
+
     .edit-btn:hover {
       background-color: rgba(255, 255, 255, 0.4);
     }
@@ -91,87 +97,257 @@
     .details-preview h3,
     .section h3 {
       font-size: 16px;
-      margin-bottom: 10px;
-      color: #ffdd57;
+      margin-bottom: 15px;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+      color: #ffffff;
+      border-radius: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
     }
 
-    .details-preview p,
-    .section ul {
-      font-size: 14px;
-      margin: 5px 0;
-      color: #fff;
-      opacity: 0.9;
+    .details-preview h3::before,
+    .section h3::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: rotate(25deg);
+      animation: shine 3s infinite linear;
     }
 
-    .section ul {
-      list-style: disc;
-      margin-left: 20px;
-    }
-
-    .section ul li {
-      margin-bottom: 6px;
+    @keyframes shine {
+      0% { top: -50%; left: -50%; }
+      100% { top: 150%; left: 150%; }
     }
 
     .section a {
       color: #ffd700;
       text-decoration: none;
-      transition: color 0.3s ease;
     }
 
     .section a:hover {
-      color: #ffffff;
       text-decoration: underline;
+      color: #fff;
+    }
+
+    .blog-preview {
+      margin-bottom: 10px;
+    }
+
+    .book-list {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .book-item {
+      width: 100px;
+      text-align: center;
+    }
+
+    .book-item img {
+      width: 100px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      border: 1px solid #fff;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(6px);
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 90%;
+      color: #fff;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: #ffd700;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .modal-buttons button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      background-color: #ffd700;
+      color: #000;
+    }
+
+    .cancel-btn {
+      background-color: #444;
+      color: #fff;
     }
 
     @media screen and (max-width: 420px) {
       .profile-card {
-        width: 100%;
         padding: 20px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="profile-card">
-    <img class="avatar" src="https://i.pravatar.cc/150?img=12" alt="Profile Image" />
-    <div class="info">
-      <h2>Joshua Okoth</h2>
-      <p>joshua.okoth@example.com</p>
-      <button id="editprofile" class="edit-btn">Edit Profile</button>
-    </div>
 
-    <div class="details-preview">
-      <h3>Account Details</h3>
-      <p><strong>Username:</strong> joshuaokoth</p>
-      <p><strong>Email:</strong> joshua.okoth@example.com</p>
-      <p><strong>Preferred Genre:</strong> Sci-Fi, Mystery, Historical Fiction</p>
-    </div>
+<div class="profile-card">
+  <label for="avatarUpload">
+    <img class="avatar" id="avatar" src="https://i.pravatar.cc/150?img=12" alt="Profile Image" />
+  </label>
+  <input type="file" id="avatarUpload" accept="image/*" style="display: none;" />
 
-    <div class="section">
-      <h3>Blogs Written</h3>
-      <ul>
-        <li><a href="https://yourblogsite.com/blog/future-of-ai" target="_blank">The Future of AI in Africa</a></li>
-        <li><a href="https://yourblogsite.com/blog/storytelling-digital-age" target="_blank">Storytelling in the Digital Age</a></li>
-        <li><a href="https://yourblogsite.com/blog/why-historical-fiction" target="_blank">Why I Write Historical Fiction</a></li>
-      </ul>
-    </div>
+  <div class="info">
+    <h2 id="display-name">Joshua Okoth</h2>
+    <p><i class="fas fa-envelope"></i> <span id="display-email">joshua.okoth@example.com</span></p>
+    <button id="editprofile" class="edit-btn"><i class="fas fa-user-edit"></i>Edit Profile</button>
+  </div>
 
-    <div class="section">
-      <h3>Books Written</h3>
-      <ul>
-        <li><a href="https://yourbookreader.com/book/the-coded-kingdom" target="_blank">The Coded Kingdom</a></li>
-        <li><a href="https://yourbookreader.com/book/shadows-of-the-nile" target="_blank">Shadows of the Nile</a></li>
-      </ul>
-    </div>
+  <div class="details-preview">
+    <h3><i class="fas fa-id-card"></i> Account Details</h3>
+    <p><strong>Username:</strong> <span id="username">joshuaokoth</span></p>
+    <p><strong>Email:</strong> <span id="email">joshua.okoth@example.com</span></p>
+    <p><strong>Preferred Genre:</strong> <span id="genre">Sci-Fi, Mystery, Historical Fiction</span></p>
+  </div>
 
-    <div class="section">
-      <h3>Currently Reading</h3>
-      <ul>
-        <li><a href="https://www.goodreads.com/book/show/44767458-dune" target="_blank">Dune by Frank Herbert</a></li>
-        <li><a href="https://www.goodreads.com/book/show/21856367-the-innovators" target="_blank">The Innovators by Walter Isaacson</a></li>
-        <li><a href="https://www.goodreads.com/book/show/186074.The_Name_of_the_Wind" target="_blank">The Name of the Wind by Patrick Rothfuss</a></li>
-      </ul>
+  <div class="section">
+    <h3><i class="fas fa-blog"></i> Blogs Written</h3>
+    <div class="blog-preview">
+      <a href="#">The Future of AI in Africa</a>
+      <p>A brief look into how artificial intelligence is reshaping the African continent.</p>
+    </div>
+    <div class="blog-preview">
+      <a href="#">Storytelling in the Digital Age</a>
+      <p>Why digital tools matter in how stories are told today.</p>
+    </div>
+    <div class="blog-preview">
+      <a href="#">Why I Write Historical Fiction</a>
+      <p>A deep dive into my love for history and narrative.</p>
     </div>
   </div>
+
+  <div class="section">
+    <h3><i class="fas fa-book"></i> Books Written</h3>
+    <div class="book-list">
+      <div class="book-item">
+        <a href="#"><img src="https://via.placeholder.com/100x150?text=Coded+Kingdom" /></a>
+        <p>The Coded Kingdom</p>
+      </div>
+      <div class="book-item">
+        <a href="#"><img src="https://via.placeholder.com/100x150?text=Shadows+of+the+Nile" /></a>
+        <p>Shadows of the Nile</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><i class="fas fa-glasses"></i> Currently Reading</h3>
+    <div class="book-list">
+      <div class="book-item">
+        <a href="#"><img src="https://via.placeholder.com/100x150?text=Dune" /></a>
+        <p>Dune</p>
+      </div>
+      <div class="book-item">
+        <a href="#"><img src="https://via.placeholder.com/100x150?text=Innovators" /></a>
+        <p>Innovators</p>
+      </div>
+      <div class="book-item">
+        <a href="#"><img src="https://via.placeholder.com/100x150?text=Name+of+Wind" /></a>
+        <p>Name of the Wind</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h2>Edit Profile</h2>
+    <input type="text" id="edit-username" placeholder="Username">
+    <input type="email" id="edit-email" placeholder="Email">
+    <input type="text" id="edit-genre" placeholder="Preferred Genre">
+    <div class="modal-buttons">
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="save-btn" onclick="saveProfile()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('editModal');
+
+  document.getElementById('editprofile').onclick = () => {
+    document.getElementById('edit-username').value = document.getElementById('username').innerText;
+    document.getElementById('edit-email').value = document.getElementById('email').innerText;
+    document.getElementById('edit-genre').value = document.getElementById('genre').innerText;
+    modal.style.display = 'flex';
+  };
+
+  function closeModal() {
+    modal.style.display = 'none';
+  }
+
+  function saveProfile() {
+    document.getElementById('username').innerText = document.getElementById('edit-username').value;
+    document.getElementById('email').innerText = document.getElementById('edit-email').value;
+    document.getElementById('genre').innerText = document.getElementById('edit-genre').value;
+    document.getElementById('display-name').innerText = document.getElementById('edit-username').value;
+    document.getElementById('display-email').innerText = document.getElementById('edit-email').value;
+    closeModal();
+  }
+
+  document.getElementById('avatarUpload').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById('avatar').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
 </body>
 </html>
