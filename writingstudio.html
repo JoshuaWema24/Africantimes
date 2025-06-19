@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Writing Studio - Noveltopia</title>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('luxury-reading-material-illuminates-old-fashioned-elegance-indoors-generated-by-ai.jpg') no-repeat center center fixed;
+      background-size: cover;
+      padding: 70px;
+      
+    }
+
+    header {
+      background: transparent;
+      backdrop-filter: blur(15px);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 50px;
+      border: 2px solid #ddd;
+        box-shadow: 0 0 60px rgb(239, 243, 11);
+        text-shadow: 0,060px;
+    }
+
+    .studio-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: transparent;
+      backdrop-filter: blur(20px);
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 30px;
+      padding: 30px;
+      border: 2px solid white;
+      box-shadow: 0 0 60px rgba(207, 224, 12, 0.986);
+    }
+
+    input#title {
+      width: 100%;
+      font-size: 20px;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+    }
+
+    #editor {
+      height: 300px;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .toolbar {
+      margin-bottom: 10px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .word-count {
+      font-size: 14px;
+      color: #666;
+    }
+
+    button#saveBtn {
+      background-color: brown;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button#saveBtn:hover {
+      background: linear-gradient(45deg, #f2ff00, #e52e71);
+    }
+
+    @media screen and (max-width: 600px) {
+      .actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>✍️ Writing Studio</header>
+  <div class="studio-container">
+    <input type="text" id="title" placeholder="Enter chapter number..." />
+
+    <div id="editor" class="quill-editor"></div>
+
+    <div class="actions">
+      <div class="word-count" id="wordCount">Word Count: 0</div>
+      <button id="saveBtn">Save</button>
+    </div>
+  </div>
+
+  <!-- Quill Editor JS -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  <script>
+    // Initialize Quill editor
+    const quill = new Quill('#editor', {
+      theme: 'snow',
+      placeholder: 'Start writing your novel...',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'],
+          [{ 'header': [1, 2, 3, false] }],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          ['link', 'code-block'],
+          ['clean']
+        ]
+      }
+    });
+
+    const titleInput = document.getElementById('title');
+    const wordCountDisplay = document.getElementById('wordCount');
+    const saveBtn = document.getElementById('saveBtn');
+
+    // Load draft from localStorage
+    window.onload = function () {
+      const savedContent = localStorage.getItem('novelDraft');
+      const savedTitle = localStorage.getItem('novelTitle');
+      if (savedContent) quill.root.innerHTML = savedContent;
+      if (savedTitle) titleInput.value = savedTitle;
+      updateWordCount();
+    };
+
+    // Auto-save to localStorage
+    setInterval(() => {
+      localStorage.setItem('novelDraft', quill.root.innerHTML);
+      localStorage.setItem('novelTitle', titleInput.value);
+    }, 3000); // every 3 seconds
+
+    // Word count function
+    function updateWordCount() {
+      const text = quill.getText().trim();
+      const wordCount = text.length > 0 ? text.split(/\s+/).length : 0;
+      wordCountDisplay.textContent = `Word Count: ${wordCount}`;
+    }
+
+    quill.on('text-change', updateWordCount);
+
+    // Save button (extend this to POST to your server)
+    saveBtn.addEventListener('click', () => {
+      const content = quill.root.innerHTML;
+      const title = titleInput.value;
+
+      // Here you'd send the content + title to your backend
+      alert('Draft saved!\n\n(Extend this to save to MongoDB or Firebase)');
+      console.log('Title:', title);
+      console.log('Content:', content);
+    });
+  </script>
+</body>
+</html>
