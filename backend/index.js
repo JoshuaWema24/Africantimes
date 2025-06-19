@@ -117,8 +117,27 @@ app.post('/writebook', async (req, res) => {
   }
 });
 
+ //login route...
+ app.post('/login', async (req, res) => {
+   try {
+     const { username, password } = req.body;
+     const user = await User.findOne({ username });
+
+     if (!user)
+       return res.status(401).json({ success: false, message: "Cannot find username!" });
+
+     const isMatch = await bcrypt.compare(password, user.password);
+     if (!isMatch)
+       return res.status(401).json({ success: false, message: 'Wrong password!' });
+
+     res.status(200).json({ success: true, message: 'Login successful', user: { username: user.username, email: user.email } });
+   } catch (err) {
+     console.error('Login error:', err);
+     res.status(500).json({ error: 'Server error during login' });
+   }
+ });
+ 
 // ==== FUTURE ROUTES TO ADD ==== //
-// - Login route
 // - Write blog route
 // - Like/comment routes for blogs and books
 // - Get all blogs/books
