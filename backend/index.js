@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const e = require('express');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -154,8 +155,52 @@ app.post('/writebook', async (req, res) => {
      res.status(500).json({ error: 'Server error during login' });
    }
  });
-
  
+ //blog route...
+ app.post('/writeblog', async (req, res) => {
+  try {
+    const { blogtitle, blogauthor, blogcontent } = req.body;
+
+   if(!blogtitle)
+    return res.status(400).json({error: 'Title is required'});
+  else if(!blogauthor)
+    return res.status(400).json({error: 'Author is required'});
+  else if(!blogcontent)
+    return res.status(400).json({error: 'Content is required'});
+    
+  } catch (error) {
+    console.error('Blog creation error:', error);
+    return res.status(500).json({ error: 'Server error during blog creation'});
+  }
+ });
+  
+ // get all written books
+app.get('/getbooks', async (req, res) => {
+  try {
+    const books = await Books.find();
+    res.status(200).json({ success: true, books });
+    
+
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server error while fetching books' });
+  }
+});
+
+//get all written blogs
+app.get('/getblogs', async (req, res) => {
+ try {
+   const blogs = await Blogs.find();
+   res.status(200).json({ success: true, blogs});
+
+ } catch (error) {
+  throw new Error('SERVER ERROR WHILE FETCHING BLOGS', error);
+  res.status(500).json({ success: false, error: 'Server error while fetching blogs'})
+ }
+});
+  
+
+
+
 // ==== FUTURE ROUTES TO ADD ==== //
 // - Write blog route
 // - Like/comment routes for blogs and books
