@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>novelTopia.bookmarks</title>
+  <title>novelTopia.novel</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     body {
       background: url('logo_make_11_06_2023_22.jpg') no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 20px;
     }
 
-     .nav-button {
+    .nav-button {
       position: fixed;
       top: 20px;
       left: 20px;
@@ -107,40 +108,49 @@
         width: 40px;
         height: 40px;
       }
+
+      .nav-button i {
+        font-size: 18px;
+      }
+
+      .sidebar {
+        width: 200px;
+        padding: 60px 15px;
+      }
+
+      .sidebar a {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Button -->
-  <button class="nav-button" id="navButton">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </button>
-
-<!-- Hamburger Button -->
+  <!-- Navigation Toggle Button -->
   <button class="nav-button" id="navButton" aria-label="Toggle Sidebar">
     <i class="fas fa-bars" id="menuIcon"></i>
   </button>
-  
-  <!-- Sidebar -->
+
+  <!-- Sidebar Menu -->
   <div class="sidebar" id="sidebar">
     <ul>
       <li><a href="homepage.html"><i class="fas fa-home"></i> Home</a></li>
-      <li><a href="novels.html"><i class="fas fa-book-open"></i> library</a></li>
+      <li><a href="novels.html"><i class="fas fa-book-open"></i> Library</a></li>
       <li><a href="blog.html"><i class="fas fa-blog"></i> Blog</a></li>
       <li><a href="bookmarks.html"><i class="fas fa-bookmark"></i> Bookmarks</a></li>
       <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
     </ul>
   </div>
-  <!-- Script to toggle sidebar -->
+
+  <!-- Sidebar Toggle Script -->
   <script>
     const navButton = document.getElementById('navButton');
     const sidebar = document.getElementById('sidebar');
+    const menuIcon = document.getElementById('menuIcon');
 
     navButton.addEventListener('click', () => {
-      sidebar.classList.toggle('open'); // Corrected class
+      sidebar.classList.toggle('open');
+      navButton.classList.toggle('open');
     });
   </script>
 
