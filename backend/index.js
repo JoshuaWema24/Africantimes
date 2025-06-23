@@ -28,7 +28,9 @@ mongoose.connect('mongodb://localhost:27017/noveltopia', {
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  email:    { type: String, required: true, unique: true }
+  email:    { type: String, required: true, unique: true },
+  genre: { type: String, default: 'General' }, 
+  profilePicture: { type: String, default: '' }, 
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
@@ -40,8 +42,8 @@ const bookSchema = new mongoose.Schema({
   bookgenre: { type: String, required: true },
   bookdesc: { type: String },
   content: { type: String },
-  bookcover: { type: String }, // assuming cover is a URL or base64 string
-  likes: { type: Number, default: 0 }
+  bookcover: { type: String }, 
+
 }, { timestamps: true });
 
 const Books = mongoose.model('Books', bookSchema);
@@ -51,7 +53,6 @@ const blogSchema = new mongoose.Schema({
   blogtitle: { type: String, required: true, unique: true },
   blogauthor: { type: String, required: true },
   blogcontent: { type: String, required: true },
-  likes: { type: Number, default: 0 },
   blogdate: { type: Date, default: Date.now }
 }, { timestamps: true });
 
@@ -66,6 +67,23 @@ const commentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const Comment = mongoose.model('Comment', commentSchema);
+ 
+const likesSchema = new mongoose.Schema({
+  blogsid: { type: mongoose.Schema.Types.ObjectId, ref: 'Blogs', required: false },
+  bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Books', required: false },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  chaptersId: { type: mongoose.Schema.Types.ObjectId, ref: 'chapters', required: true},
+  like: { type: String, required: true},
+})
+
+const chapterSchema = new mongoose.Schema({
+  bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Books', required: true },
+  chapterTitle: { type: String, required: true },
+  chapterContent: { type: String, required: true },
+  chapterNumber: { type: Number, required: true },
+ }, {timestamps: true}) 
+
+ const Chapters = mongoose.model('chapters', chapterSchema);
 
 // ==== ROUTES ==== //
 
@@ -136,6 +154,7 @@ app.post('/writebook', async (req, res) => {
      res.status(500).json({ error: 'Server error during login' });
    }
  });
+
  
 // ==== FUTURE ROUTES TO ADD ==== //
 // - Write blog route
