@@ -23,41 +23,16 @@ mongoose.connect('mongodb://localhost:27017/noveltopia', {
   console.error('❌ MongoDB connection error:', err);
 });
 
-// ==== SCHEMAS ==== //
 
-// User Schema
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  email:    { type: String, required: true, unique: true },
-  genre: { type: String, default: 'General' }, 
-  profilePicture: { type: String, default: '' }, 
-}, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
 
-// Book Schema
-const bookSchema = new mongoose.Schema({
-  booktitle: { type: String, required: true, unique: true },
-  bookauthor: { type: String, required: true },
-  bookgenre: { type: String, required: true },
-  bookdesc: { type: String },
-  content: { type: String },
-  bookcover: { type: String }, 
 
-}, { timestamps: true });
 
-const Books = mongoose.model('Books', bookSchema);
 
-// Blog Schema
-const blogSchema = new mongoose.Schema({
-  blogtitle: { type: String, required: true, unique: true },
-  blogauthor: { type: String, required: true },
-  blogcontent: { type: String, required: true },
-  blogdate: { type: Date, default: Date.now }
-}, { timestamps: true });
 
-const Blogs = mongoose.model('Blogs', blogSchema);
+
+
+
 
 // Comment Schema
 const commentSchema = new mongoose.Schema({
@@ -77,14 +52,7 @@ const likesSchema = new mongoose.Schema({
   like: { type: String, required: true},
 })
 
-const chapterSchema = new mongoose.Schema({
-  bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Books', required: true },
-  chapterTitle: { type: String, required: true },
-  chapterContent: { type: String, required: true },
-  chapterNumber: { type: Number, required: true },
- }, {timestamps: true}) 
 
- const Chapters = mongoose.model('chapters', chapterSchema);
 
 // ==== ROUTES ==== //
 
