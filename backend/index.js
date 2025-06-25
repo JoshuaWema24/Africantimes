@@ -22,160 +22,24 @@ mongoose.connect('mongodb://localhost:27017/noveltopia', {
 }).catch(err => {
   console.error('❌ MongoDB connection error:', err);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-// Comment Schema
-const commentSchema = new mongoose.Schema({
-  blogsid: { type: mongoose.Schema.Types.ObjectId, ref: 'Blogs', required: false },
-  bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Books', required: false },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  comment: { type: String, required: true }
-}, { timestamps: true });
-
-const Comment = mongoose.model('Comment', commentSchema);
  
-const likesSchema = new mongoose.Schema({
-  blogsid: { type: mongoose.Schema.Types.ObjectId, ref: 'Blogs', required: false },
-  bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Books', required: false },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  chaptersId: { type: mongoose.Schema.Types.ObjectId, ref: 'chapters', required: true},
-  like: { type: String, required: true},
-})
+// User routes
+const User = require('./models/User'); // Assuming you have a User model defined in models/User.js
+app.use('/users', require('./routes/user.routes')); // Assuming you have user routes defined in routes/user.routes.js
+
+// chapter routes
+const Chapter = require('./models/Chapter'); // Assuming you have a Chapter model defined in models/Chapter.js
+app.use('/chapters', require('./routes/chapter.routes')); // Assuming you have chapter routes defined in routes/chapter.routes.js
+
+//book routes
+const Book = require('./models/book.model.js'); // Assuming you have a Book model defined in models/book.model.js
+app.use('/books', require('./routes/book.routes')); // Assuming you have book routes defined in routes/book.routes.js
+
+// blog routes
+const Blog = require('./models/blog.model.js'); // Assuming you have a Blog model defined in models/blog.model.js
+app.use('/blogs', require('./routes/blog.routes')); // Assuming you have blog routes defined in
 
 
-
-// ==== ROUTES ==== //
-
-// Signup Route
-app.post('/signup', async (req, res) => {
-  const { username, password, email } = req.body;
-
-  if (!username || !password || !email)
-    return res.status(400).json({ error: 'Username, password and email are required' });
-
-  try {
-    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-    if (existingUser) {
-      return res.status(409).json({ error: 'Username or email already taken' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = new User({ username, password: hashedPassword, email });
-    await newUser.save();
-
-    res.status(201).json({ message: `Registration successful. Welcome, ${username}!` });
-  } catch (err) {
-    console.error('Signup error:', err);
-    res.status(500).json({ error: 'Server error during signup' });
-  }
-});
-
-// Write a Book Route
-app.post('/writebook', async (req, res) => {
-  const { booktitle, bookauthor, bookgenre, bookdesc, content, bookcover } = req.body;
-
-  if (!booktitle || !bookauthor || !bookgenre)
-    return res.status(400).json({ error: 'Book title, author, and genre are required' });
-
-  try {
-    const existingBook = await Books.findOne({ booktitle });
-    if (existingBook) {
-      return res.status(409).json({ error: 'Book title already exists' });
-    }
-
-    const newBook = new Books({ booktitle, bookauthor, bookgenre, bookdesc, content, bookcover });
-    await newBook.save();
-
-    res.status(201).json({ message: 'Book created successfully', book: newBook });
-  } catch (err) {
-    console.error('Book creation error:', err);
-    res.status(500).json({ error: 'Server error during book creation' });
-  }
-});
-
- //login route...
- app.post('/login', async (req, res) => {
-   try {
-     const { username, password } = req.body;
-     const user = await User.findOne({ username });
-
-     if (!user)
-       return res.status(401).json({ success: false, message: "Cannot find username!" });
-
-     const isMatch = await bcrypt.compare(password, user.password);
-     if (!isMatch)
-       return res.status(401).json({ success: false, message: 'Wrong password!' });
-
-     res.status(200).json({ success: true, message: 'Login successful', user: { username: user.username, email: user.email } });
-   } catch (err) {
-     console.error('Login error:', err);
-     res.status(500).json({ error: 'Server error during login' });
-   }
- });
- 
- //blog route...
- app.post('/writeblog', async (req, res) => {
-  try {
-    const { blogtitle, blogauthor, blogcontent } = req.body;
-
-   if(!blogtitle)
-    return res.status(400).json({error: 'Title is required'});
-  else if(!blogauthor)
-    return res.status(400).json({error: 'Author is required'});
-  else if(!blogcontent)
-    return res.status(400).json({error: 'Content is required'});
-    
-  } catch (error) {
-    console.error('Blog creation error:', error);
-    return res.status(500).json({ error: 'Server error during blog creation'});
-  }
- });
-  
- // get all written books
-app.get('/getbooks', async (req, res) => {
-  try {
-    const books = await Books.find();
-    res.status(200).json({ success: true, books });
-    
-
-  } catch (error) {
-    res.status(500).json({ success: false, error: 'Server error while fetching books' });
-  }
-});
-
-//get all written blogs
-app.get('/getblogs', async (req, res) => {
- try {
-   const blogs = await Blogs.find();
-   res.status(200).json({ success: true, blogs});
-
- } catch (error) {
-  throw new Error('SERVER ERROR WHILE FETCHING BLOGS', error);
-  res.status(500).json({ success: false, error: 'Server error while fetching blogs'})
- }
-});
-  
-
-
-
-// ==== FUTURE ROUTES TO ADD ==== //
-// - Write blog route
-// - Like/comment routes for blogs and books
-// - Get all blogs/books
-// - Profile update
-
-// ==== START SERVER ==== //
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
 });
