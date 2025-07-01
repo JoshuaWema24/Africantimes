@@ -13,7 +13,6 @@
       background: url('luxury-reading-material-illuminates-old-fashioned-elegance-indoors-generated-by-ai.jpg') no-repeat center center fixed;
       background-size: cover;
       padding: 30px;
-      
     }
 
     header {
@@ -26,8 +25,8 @@
       font-weight: bold;
       border-radius: 50px;
       border: 2px solid #ddd;
-        box-shadow: 0 0 60px rgb(239, 243, 11);
-        text-shadow: 0,060px;
+      box-shadow: 0 0 60px rgb(239, 243, 11);
+      text-shadow: 0,060px;
     }
 
     .studio-container {
@@ -35,11 +34,9 @@
       margin: 30px auto;
       background: transparent;
       backdrop-filter: blur(20px);
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      border-radius: 30px;
       padding: 30px;
       border: 2px solid white;
+      border-radius: 30px;
       box-shadow: 0 0 60px rgba(207, 224, 12, 0.986);
     }
 
@@ -58,22 +55,20 @@
       color: white;
     }
 
-    .toolbar {
-      margin-bottom: 10px;
-    }
-
     .actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .word-count {
       font-size: 14px;
-      color: #666;
+      color: #ccc;
     }
 
-    button#saveBtn {
+    button {
       background-color: brown;
       color: white;
       border: none;
@@ -84,38 +79,28 @@
       transition: 0.3s;
     }
 
-    button#saveBtn:hover {
+    button:hover {
       background: linear-gradient(45deg, #f2ff00, #e52e71);
-    }
-
-    @media screen and (max-width: 600px) {
-      .actions {
-        flex-direction: column;
-        gap: 10px;
-      }
     }
   </style>
 </head>
 <body>
   <header>✍️ Writing Studio</header>
   <div class="studio-container">
-    <input type="text" id="title" placeholder="Enter chapter number..." />
-
-    <div id="editor" class="quill-editor"></div>
-
+    <input type="text" id="title" placeholder="Enter chapter title..." />
+    <div id="editor"></div>
     <div class="actions">
       <div class="word-count" id="wordCount">Word Count: 0</div>
       <button id="saveBtn">Save</button>
+      <button id="exportBtn">Export Chapter</button>
     </div>
   </div>
 
-  <!-- Quill Editor JS -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
   <script>
-    // Initialize Quill editor
     const quill = new Quill('#editor', {
       theme: 'snow',
-      placeholder: 'Start writing your novel...',
+      placeholder: 'Start writing your chapter...',
       modules: {
         toolbar: [
           ['bold', 'italic', 'underline'],
@@ -130,23 +115,23 @@
     const titleInput = document.getElementById('title');
     const wordCountDisplay = document.getElementById('wordCount');
     const saveBtn = document.getElementById('saveBtn');
+    const exportBtn = document.getElementById('exportBtn');
 
-    // Load draft from localStorage
-    window.onload = function () {
-      const savedContent = localStorage.getItem('novelDraft');
-      const savedTitle = localStorage.getItem('novelTitle');
+    // Load last draft if available
+    window.onload = () => {
+      const savedContent = localStorage.getItem('currentDraft');
+      const savedTitle = localStorage.getItem('currentTitle');
       if (savedContent) quill.root.innerHTML = savedContent;
       if (savedTitle) titleInput.value = savedTitle;
       updateWordCount();
     };
 
-    // Auto-save to localStorage
+    // Auto-save draft
     setInterval(() => {
-      localStorage.setItem('novelDraft', quill.root.innerHTML);
-      localStorage.setItem('novelTitle', titleInput.value);
-    }, 3000); // every 3 seconds
+      localStorage.setItem('currentDraft', quill.root.innerHTML);
+      localStorage.setItem('currentTitle', titleInput.value);
+    }, 3000);
 
-    // Word count function
     function updateWordCount() {
       const text = quill.getText().trim();
       const wordCount = text.length > 0 ? text.split(/\s+/).length : 0;
@@ -155,15 +140,28 @@
 
     quill.on('text-change', updateWordCount);
 
-    // Save button (extend this to POST to your server)
     saveBtn.addEventListener('click', () => {
       const content = quill.root.innerHTML;
-      const title = titleInput.value;
+      const title = titleInput.value.trim() || `Chapter ${Date.now()}`;
+      let chapters = JSON.parse(localStorage.getItem('chapters')) || [];
+      chapters.push({ title, content });
+      localStorage.setItem('chapters', JSON.stringify(chapters));
+      alert(`Saved "${title}" successfully!`);
+      localStorage.removeItem('currentDraft');
+      localStorage.removeItem('currentTitle');
+      window.location.href = 'chapterselection.html';
+    });
 
-      // Here you'd send the content + title to your backend
-      alert('Draft saved!\n\n(Extend this to save to MongoDB or Firebase)');
-      console.log('Title:', title);
-      console.log('Content:', content);
+    exportBtn.addEventListener('click', () => {
+      const title = titleInput.value || "chapter";
+      const content = quill.root.innerHTML;
+      const blob = new Blob([content], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title}.html`;
+      a.click();
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
