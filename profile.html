@@ -26,14 +26,16 @@
 
     .profile-card {
       width: 100%;
-      max-width: 400px;
-      padding: 30px;
-      border-radius: 20px;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      padding: 40px;
+      border-radius: 30px;
       backdrop-filter: blur(15px);
       background: rgba(255, 255, 255, 0.1);
       border: 1.5px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      text-align: center;
       color: #fff;
       transition: 0.3s;
     }
@@ -44,29 +46,36 @@
       transform: scale(1.02);
     }
 
+    .top-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       border: 3px solid white;
       object-fit: cover;
-      margin-bottom: 20px;
       cursor: pointer;
     }
 
     .info h2 {
-      font-size: 22px;
+      font-size: 32px;
       margin-bottom: 5px;
     }
 
     .info p {
-      font-size: 14px;
+      font-size: 18px;
       opacity: 0.8;
       margin-bottom: 15px;
     }
 
     .edit-btn {
-      padding: 10px 20px;
+      font-size: 16px;
+      padding: 12px 24px;
       border: none;
       border-radius: 25px;
       background-color: rgba(255, 255, 255, 0.2);
@@ -86,17 +95,17 @@
 
     .details-preview,
     .section {
+      width: 100%;
       text-align: left;
-      margin-top: 25px;
       background: rgba(255, 255, 255, 0.1);
-      padding: 15px;
-      border-radius: 15px;
+      padding: 20px;
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .details-preview h3,
     .section h3 {
-      font-size: 16px;
+      font-size: 20px;
       margin-bottom: 15px;
       padding: 12px 18px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
@@ -147,18 +156,18 @@
 
     .book-list {
       display: flex;
-      gap: 10px;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
     .book-item {
-      width: 100px;
+      width: 120px;
       text-align: center;
     }
 
     .book-item img {
-      width: 100px;
-      height: 150px;
+      width: 100%;
+      height: 180px;
       object-fit: cover;
       border-radius: 10px;
       margin-bottom: 5px;
@@ -181,8 +190,8 @@
 
     .modal-content {
       background-color: #222;
-      padding: 20px;
-      border-radius: 15px;
+      padding: 30px;
+      border-radius: 20px;
       max-width: 400px;
       width: 90%;
       color: #fff;
@@ -190,15 +199,15 @@
 
     .modal-content h2 {
       margin-bottom: 20px;
-      font-size: 20px;
+      font-size: 24px;
       color: #ffd700;
     }
 
     .modal-content input {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 10px;
       border: none;
     }
 
@@ -208,7 +217,7 @@
     }
 
     .modal-buttons button {
-      padding: 10px 15px;
+      padding: 12px 20px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -224,9 +233,44 @@
       color: #fff;
     }
 
-    @media screen and (max-width: 420px) {
-      .profile-card {
-        padding: 20px;
+    @media screen and (min-width: 1024px) {
+      .top-section {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 40px;
+      }
+
+      .info {
+        text-align: left;
+      }
+
+      .book-item {
+        width: 140px;
+      }
+
+      .book-item img {
+        height: 200px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .info h2 {
+        font-size: 24px;
+      }
+
+      .info p {
+        font-size: 16px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .book-item {
+        width: 100px;
+      }
+
+      .book-item img {
+        height: 150px;
       }
     }
   </style>
@@ -234,15 +278,17 @@
 <body>
 
 <div class="profile-card">
-  <label for="avatarUpload">
-    <img class="avatar" id="avatar" src="https://i.pravatar.cc/150?img=12" alt="Profile Image" />
-  </label>
-  <input type="file" id="avatarUpload" accept="image/*" style="display: none;" />
+  <div class="top-section">
+    <label for="avatarUpload">
+      <img class="avatar" id="avatar" src="https://i.pravatar.cc/150?img=12" alt="Profile Image" />
+    </label>
+    <input type="file" id="avatarUpload" accept="image/*" style="display: none;" />
 
-  <div class="info">
-    <h2 id="display-name">Joshua Okoth</h2>
-    <p><i class="fas fa-envelope"></i> <span id="display-email">joshua.okoth@example.com</span></p>
-    <button id="editprofile" class="edit-btn"><i class="fas fa-user-edit"></i>Edit Profile</button>
+    <div class="info">
+      <h2 id="display-name">Joshua Okoth</h2>
+      <p><i class="fas fa-envelope"></i> <span id="display-email">joshua.okoth@example.com</span></p>
+      <button id="editprofile" class="edit-btn"><i class="fas fa-user-edit"></i>Edit Profile</button>
+    </div>
   </div>
 
   <div class="details-preview">
