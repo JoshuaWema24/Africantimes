@@ -156,12 +156,13 @@
       font-size: 1.1rem;
     }
 
-    #coverPreview {
+    #preview-cover {
       width: 100%;
       max-width: 250px;
-      margin: 10px 0;
+      margin: 15px 0;
       border-radius: 10px;
       border: 2px solid #fff;
+      display: none;
       object-fit: cover;
     }
 
@@ -235,7 +236,6 @@
           <i class="fa fa-file-image"></i>
           <input type="file" id="bookcover" name="bookcover" accept="image/*" />
           <label style="left: 40px; top: -10px; font-size: 0.8rem; background: gold; color: black; border-radius: 5px;">Upload or Drag Cover Image</label>
-          <img id="coverPreview" src="" alt="Cover Preview" style="display:none;" />
         </div>
 
         <div class="input-group">
@@ -249,6 +249,7 @@
 
     <div class="preview-card">
       <h2>Preview</h2>
+      <img id="preview-cover" alt="Cover Preview" />
       <p><strong>Title:</strong> <span id="preview-title">Your Title</span></p>
       <p><strong>Author:</strong> <span id="preview-author">Your Name</span></p>
       <p><strong>Genre:</strong> <span id="preview-genre">Genre</span></p>
@@ -266,19 +267,21 @@
     const previewGenre = document.getElementById('preview-genre');
     const previewDesc = document.getElementById('preview-desc');
     const bookCover = document.getElementById('bookcover');
-    const coverPreview = document.getElementById('coverPreview');
+    const previewCover = document.getElementById('preview-cover');
     const dropArea = document.getElementById('dropArea');
 
-    // Live text preview
     titleInput.addEventListener('input', () => {
       previewTitle.textContent = titleInput.value || 'Your Title';
     });
+
     authorInput.addEventListener('input', () => {
       previewAuthor.textContent = authorInput.value || 'Your Name';
     });
+
     genreInput.addEventListener('input', () => {
       previewGenre.textContent = genreInput.value || 'Genre';
     });
+
     descInput.addEventListener('input', () => {
       previewDesc.textContent = descInput.value || 'Short summary of your book';
     });
@@ -289,14 +292,14 @@
       if (file && file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = () => {
-          coverPreview.src = reader.result;
-          coverPreview.style.display = 'block';
+          previewCover.src = reader.result;
+          previewCover.style.display = 'block';
         };
         reader.readAsDataURL(file);
       }
     });
 
-    // Drag and Drop image
+    // Drag & Drop
     ['dragenter', 'dragover'].forEach(event => {
       dropArea.addEventListener(event, e => {
         e.preventDefault();
@@ -316,15 +319,15 @@
       if (file && file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = () => {
-          coverPreview.src = reader.result;
-          coverPreview.style.display = 'block';
+          previewCover.src = reader.result;
+          previewCover.style.display = 'block';
         };
         reader.readAsDataURL(file);
         bookCover.files = e.dataTransfer.files;
       }
     });
 
-    // Form submission (replace backend link as needed)
+    // Form submission
     document.getElementById("bookform").addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -348,6 +351,5 @@
       }
     });
   </script>
-
 </body>
 </html>
