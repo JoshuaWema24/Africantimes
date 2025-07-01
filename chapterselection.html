@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Display</title>
+  <title>Chapter Selection</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: url('luxury-reading-material-illuminates-old-fashioned-elegance-indoors-generated-by-ai.jpg')no-repeat center center fixed;
+      background: url('luxury-reading-material-illuminates-old-fashioned-elegance-indoors-generated-by-ai.jpg') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -17,40 +17,54 @@
     }
 
     .book-container {
-      background-color: transparent;
+      background-color: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(20px);
-      border-radius: 50px;
+      border-radius: 30px;
       border: 2px solid white;
       box-shadow: 0 0 60px rgb(255, 251, 4);
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 600px;
+      padding: 40px;
       width: 100%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 1200px;
       color: white;
+      box-sizing: border-box;
+    }
+
+    .book-preview {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
     }
 
     .book-cover {
-      width: 100%;
-      height: 300px;
+      width: 300px;
+      height: 400px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 15px;
+      border-radius: 12px;
       background-color: #ddd;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .book-details {
+      flex: 1;
     }
 
     .book-title {
-      font-size: 1.8rem;
+      font-size: 2.5rem;
       font-weight: bold;
+      margin-bottom: 15px;
+      color: gold;
+    }
+
+    .book-meta {
       margin-bottom: 10px;
-      color: white;
+      font-size: 1.2rem;
     }
 
     .book-description {
-      font-size: 1rem;
-      color: white;
-      line-height: 1.5;
-      margin-bottom: 20px;
+      font-size: 1.1rem;
+      line-height: 1.6;
     }
 
     .chapters-section {
@@ -58,19 +72,21 @@
     }
 
     .chapters-title {
-      font-size: 1.2rem;
+      font-size: 1.8rem;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       color: white;
     }
 
     .chapter-item {
-      padding: 10px 15px;
+      padding: 15px 20px;
       background-color: white;
-      margin-bottom: 10px;
-      border-radius: 6px;
+      margin-bottom: 15px;
+      border-radius: 10px;
       cursor: pointer;
+      font-size: 1.1rem;
       transition: background-color 0.3s;
+      color: black;
     }
 
     .chapter-item:hover {
@@ -79,59 +95,86 @@
 
     .add-chapter-btn {
       display: inline-block;
-      padding: 10px 20px;
+      padding: 14px 28px;
       background-color: white;
-      color: white;
-      text-align: center;
+      color: black;
       border: none;
-      border-radius: 6px;
-      font-size: 1rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
       cursor: pointer;
       margin-top: 20px;
-      transition: background-color 0.3s;
-
+      transition: background-color 0.3s, box-shadow 0.3s;
     }
 
     .add-chapter-btn:hover {
       background-color: yellow;
       box-shadow: 0 0 60px rgb(239, 243, 11);
     }
+
+    @media (max-width: 768px) {
+      .book-preview {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .book-cover {
+        width: 100%;
+        height: auto;
+      }
+
+      .book-title {
+        font-size: 2rem;
+      }
+
+      .book-description {
+        font-size: 1rem;
+      }
+
+      .chapters-title {
+        font-size: 1.3rem;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="book-container">
-    <img class="book-cover" src="Black and Grey Dark Forest Aesthetic Book Cover.png" alt="Book Cover" />
-    
-    <div class="book-title">Into the Unknown</div>
-    <div class="book-description">
-      An epic tale of courage, mystery, and exploration as a young hero embarks on a journey to save their world.
+    <div class="book-preview">
+      <img class="book-cover" id="coverImage" src="" alt="Book Cover" />
+      <div class="book-details">
+        <div class="book-title" id="bookTitle">Loading...</div>
+        <div class="book-meta" id="bookAuthor">Author: Unknown</div>
+        <div class="book-meta" id="bookGenre">Genre: N/A</div>
+        <div class="book-description" id="bookDesc">Description loading...</div>
+      </div>
     </div>
 
     <div class="chapters-section">
       <div class="chapters-title">Chapters</div>
 
-      <!-- CHAPTER LIST - Replace these with dynamic content from backend -->
-      <div id="chapter-list">
-        <!-- Example static chapter items -->
-        <!--
-        <div class="chapter-item">Chapter 1: Into the Unknown</div>
-        <div class="chapter-item">Chapter 2: Shadows of the Past</div>
-        -->
-      </div>
+      <div id="chapter-list"></div>
 
-      <!-- Show this button if no chapters exist -->
       <div id="no-chapters">
-        <p style="color: #777;">No chapters yet.</p>
-        <button class="add-chapter-btn" onclick="addChapter()"><a href="writingstudio.html">Add Chapter</a></button>
+        <p style="color: #ccc;">No chapters yet.</p>
+        <button class="add-chapter-btn" onclick="addChapter()">Add Chapter</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Simulating chapter loading from backend
-    const chapters = []; // Replace with backend data like: ['Chapter 1: ...', 'Chapter 2: ...']
+    document.getElementById("bookTitle").textContent = localStorage.getItem("booktitle") || "Your Book Title";
+    document.getElementById("bookAuthor").textContent = "Author: " + (localStorage.getItem("bookauthor") || "Unknown");
+    document.getElementById("bookGenre").textContent = "Genre: " + (localStorage.getItem("bookgenre") || "N/A");
+    document.getElementById("bookDesc").textContent = localStorage.getItem("bookdesc") || "No description provided.";
 
+    const cover = localStorage.getItem("bookcover");
+    if (cover) {
+      document.getElementById("coverImage").src = cover;
+    } else {
+      document.getElementById("coverImage").src = "placeholder-cover.jpg"; // fallback
+    }
+
+    const chapters = []; // Replace with real data
     const chapterList = document.getElementById('chapter-list');
     const noChaptersSection = document.getElementById('no-chapters');
 
@@ -148,8 +191,7 @@
     }
 
     function addChapter() {
-      alert('Redirect to chapter creation page');
-      // In real app: window.location.href = '/create-chapter';
+      window.location.href = 'writingstudio.html';
     }
   </script>
 
