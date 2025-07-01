@@ -22,13 +22,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 40px;
     }
-    
-     h1 {
+
+    h1 {
       font-family: 'Pacifico', cursive;
       color: yellow;
-      font-size: 70px;
+      font-size: 4rem;
       text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
       margin-top: 20px;
       text-align: center;
@@ -36,23 +36,25 @@
 
     .container {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      margin-top: 20px;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      margin-top: 40px;
       width: 100%;
-      max-width: 1000px;
+      max-width: 1200px;
+      flex-wrap: wrap;
     }
 
-    .wrapper2 {
+    .wrapper2,
+    .preview-card {
+      flex: 1 1 48%;
       background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(20px);
       padding: 30px;
       border-radius: 30px;
-      width: 100%;
-      max-width: 500px;
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
       animation: fadeIn 1.2s ease;
+      color: white;
     }
 
     form {
@@ -73,13 +75,13 @@
       border-radius: 10px;
       background: transparent;
       color: #fff;
-      font-size: 1rem;
+      font-size: 1.1rem;
       backdrop-filter: blur(10px);
     }
 
     .input-group textarea {
       resize: vertical;
-      min-height: 80px;
+      min-height: 100px;
     }
 
     .input-group input[type="file"] {
@@ -127,8 +129,7 @@
       font-size: 1rem;
     }
 
-    .submit-btn,
-    .next-step-btn {
+    .submit-btn {
       padding: 12px;
       background: gold;
       color: black;
@@ -140,32 +141,41 @@
       transition: 0.3s;
     }
 
-    .submit-btn:hover,
-    .next-step-btn:hover {
+    .submit-btn:hover {
       background: #fcd21c;
     }
 
-    .preview-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-radius: 20px;
-      color: white;
-      max-width: 450px;
-      width: 100%;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      text-align: left;
-      animation: fadeIn 1.2s ease;
-    }
-
     .preview-card h2 {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       color: gold;
+      margin-bottom: 20px;
     }
 
     .preview-card p {
-      margin: 5px 0;
-      font-size: 1rem;
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    #coverPreview {
+      width: 100%;
+      max-width: 250px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 2px solid #fff;
+      object-fit: cover;
+    }
+
+    .drag-area {
+      border: 2px dashed #fff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 15px;
+      transition: 0.3s;
+    }
+
+    .drag-area.dragover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: gold;
     }
 
     @keyframes fadeIn {
@@ -173,58 +183,72 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
       h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
       }
 
       .container {
         flex-direction: column;
         align-items: center;
       }
+
+      .wrapper2,
+      .preview-card {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
- <div class="box">
   <h1>Write a Novel</h1>
- </div> 
 
   <div class="container">
     <div class="wrapper2">
-      <form action="writenovel00.html" id="bookform" method="post">
+      <form id="bookform">
         <div class="input-group">
           <i class="fa fa-book"></i>
           <input type="text" id="booktitle" name="booktitle" required placeholder=" " />
-          <label>Book Name</label>
+          <label for="booktitle">Book Name</label>
         </div>
+
         <div class="input-group">
           <i class="fa fa-user"></i>
           <input type="text" id="bookauthor" name="bookauthor" required placeholder=" " />
-          <label>Author</label>
+          <label for="bookauthor">Author</label>
         </div>
+
         <div class="input-group">
           <i class="fa fa-tags"></i>
           <input type="text" id="bookgenre" name="bookgenre" required placeholder=" " />
-          <label>Genre</label>
-        </div>
-        <div class="input-group">
-          <i class="fa fa-file-image"></i>
-          <input type="file" id="bookcover" name="bookcover" accept="image/*" />
-          <label style="left: 40px; top: -10px; font-size: 0.8rem; background: gold; color: black; border-radius: 5px;">Upload Cover Image</label>
-        </div>
-        <div class="input-group">
-          <textarea id="bookdesc" name="bookdesc" required placeholder=" "></textarea>
-          <label>Short Description</label>
+          <label for="bookgenre">Genre</label>
         </div>
 
-        <button type="submit" class="submit-btn" onclick="writenovel.html"><a href="chapterselection.html">Next</a></button>
+        <div class="input-group drag-area" id="dropArea">
+          <i class="fa fa-file-image"></i>
+          <input type="file" id="bookcover" name="bookcover" accept="image/*" />
+          <label style="left: 40px; top: -10px; font-size: 0.8rem; background: gold; color: black; border-radius: 5px;">Upload or Drag Cover Image</label>
+          <img id="coverPreview" src="" alt="Cover Preview" style="display:none;" />
+        </div>
+
+        <div class="input-group">
+          <textarea id="bookdesc" name="bookdesc" required placeholder=" "></textarea>
+          <label for="bookdesc">Short Description</label>
+        </div>
+
+        <button type="submit" class="submit-btn">Next</button>
       </form>
     </div>
 
     <div class="preview-card">
-      <h2> Preview</h2>
+      <h2>Preview</h2>
       <p><strong>Title:</strong> <span id="preview-title">Your Title</span></p>
       <p><strong>Author:</strong> <span id="preview-author">Your Name</span></p>
       <p><strong>Genre:</strong> <span id="preview-genre">Genre</span></p>
@@ -237,61 +261,93 @@
     const authorInput = document.getElementById('bookauthor');
     const genreInput = document.getElementById('bookgenre');
     const descInput = document.getElementById('bookdesc');
-
     const previewTitle = document.getElementById('preview-title');
     const previewAuthor = document.getElementById('preview-author');
     const previewGenre = document.getElementById('preview-genre');
     const previewDesc = document.getElementById('preview-desc');
+    const bookCover = document.getElementById('bookcover');
+    const coverPreview = document.getElementById('coverPreview');
+    const dropArea = document.getElementById('dropArea');
 
+    // Live text preview
     titleInput.addEventListener('input', () => {
       previewTitle.textContent = titleInput.value || 'Your Title';
     });
-
     authorInput.addEventListener('input', () => {
       previewAuthor.textContent = authorInput.value || 'Your Name';
     });
-
     genreInput.addEventListener('input', () => {
       previewGenre.textContent = genreInput.value || 'Genre';
     });
-
     descInput.addEventListener('input', () => {
       previewDesc.textContent = descInput.value || 'Short summary of your book';
     });
 
-    document.getElementById("bookform").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const booktitle = e.target.booktitle.value;
-    const bookauthor = e.target.bookauthor.value;
-    const bookgenre = e.target.bookgenre.value;
-    const bookcover = e.target.bookcover.value;
-    const bookdesc = e.target.bookdesc.value;
-   try {
-      const response = await fetch("http://localhost:3000/writebook", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ booktitle, bookauthor, bookgenre, bookcover }),
-        
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        alert(result.message);
-        window.location.href = "writenovel00.html";
-      } else {
-        alert(result.error || "Try again");
+    // Live image preview
+    bookCover.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          coverPreview.src = reader.result;
+          coverPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
       }
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred");
-    }
-  });
-   
-   
+    });
+
+    // Drag and Drop image
+    ['dragenter', 'dragover'].forEach(event => {
+      dropArea.addEventListener(event, e => {
+        e.preventDefault();
+        dropArea.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(event => {
+      dropArea.addEventListener(event, e => {
+        e.preventDefault();
+        dropArea.classList.remove('dragover');
+      });
+    });
+
+    dropArea.addEventListener('drop', (e) => {
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          coverPreview.src = reader.result;
+          coverPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+        bookCover.files = e.dataTransfer.files;
+      }
+    });
+
+    // Form submission (replace backend link as needed)
+    document.getElementById("bookform").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      try {
+        const response = await fetch("http://localhost:3000/writebook", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message);
+          window.location.href = "writenovel00.html";
+        } else {
+          alert(result.error || "Try again");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("An error occurred");
+      }
+    });
   </script>
-  
+
 </body>
 </html>
